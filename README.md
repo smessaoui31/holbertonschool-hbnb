@@ -1,1 +1,1 @@
-holbertonschool-hbnb
+HBnB - UML
