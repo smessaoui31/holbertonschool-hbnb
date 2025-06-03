@@ -1,2 +1,2 @@
 HBnB - UML
-[![Coming-Soon-Minimalist-Facebook-Cover.gif](https://i.postimg.cc/jd1mGbNf/Coming-Soon-Minimalist-Facebook-Cover.gif)](https://postimg.cc/crQFnPF1)
+[![hbnb-cover.gif](https://i.postimg.cc/JzScyV13/hbnb-cover.gif)](https://postimg.cc/pmYn7S5y)
