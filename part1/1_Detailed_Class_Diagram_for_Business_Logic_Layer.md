@@ -47,7 +47,8 @@ classDiagram
     Amenity --|> BaseModel
     Review --|> BaseModel
 
-    Place --> "1" User : owned by
+
     Review --> "1" User : written by
+    Place --> "1" User : owned by
     Review --> "1" Place : about
     Place o-- "*" Amenity : has
