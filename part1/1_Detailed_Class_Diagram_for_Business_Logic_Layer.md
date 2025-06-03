@@ -1,3 +1,4 @@
+### Detailed Class Diagram for Business Logic Layer
 ```mermaid
 classDiagram
     class BaseModel {
