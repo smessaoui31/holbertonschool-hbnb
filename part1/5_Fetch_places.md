@@ -6,13 +6,13 @@ sequenceDiagram
     participant API
     participant PlaceService
     participant PlaceRepo
-    participant DB
+    participant DataBase
 
     Client->>API: GET /places?city_id=123
     API->>PlaceService: get_places_by_city(123)
     PlaceService->>PlaceRepo: fetch_places(city_id)
     PlaceRepo->>DB: SELECT * FROM places WHERE city_id=123
-    DB-->>PlaceRepo: List of places
+    DataBase-->>PlaceRepo: List of places
     PlaceRepo-->>PlaceService: Places found
     PlaceService-->>API: Response(place_list)
     API-->>Client: 200 OK + places[]
