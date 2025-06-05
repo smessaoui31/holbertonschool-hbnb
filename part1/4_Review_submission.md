@@ -2,18 +2,14 @@
 
 ```mermaid
 sequenceDiagram
-    participant Client
+    participant User
     participant API
     participant ReviewService
-    participant ReviewRepo
-    participant DataBase
+    participant Database
 
-    Client->>API: POST /reviews
-    API->>ReviewService: submit_review(data)
-    ReviewService->>ReviewRepo: save_review(data)
-    ReviewRepo->>DB: INSERT INTO reviews ...
-    DataBase-->>ReviewRepo: OK
-    ReviewRepo-->>ReviewService: Review created
-    ReviewService-->>API: Response(review_id)
-    API-->>Client: 201 Created
-
+    User->>API: Submit review (rating, comment)
+    API->>ReviewService: Check and process review
+    ReviewService->>Database: Save review
+    Database-->>ReviewService: Confirm review saved
+    ReviewService-->>API: Send confirmation
+    API-->>User: Review submitted successfully
