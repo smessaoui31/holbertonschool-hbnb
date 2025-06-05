@@ -1,5 +1,7 @@
 ### Sequence Diagram: Fetching a List of Places
 
+```mermaid
+
 sequenceDiagram
     participant Client
     participant API
