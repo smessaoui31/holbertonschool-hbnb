@@ -1,14 +1,15 @@
-### Sequence Diagram: Fetching a List of Places
+### Sequence Diagram: Fetching Places
 
 ```mermaid
-
 sequenceDiagram
-    participant Client
+    participant User
     participant API
+    participant Logic
     participant DataBase
 
-    Client->>API: Get places (e.g., city=Paris)
-    API->>DataBase: Filter by city
-    API->>DataBase: Filter by price, guests, etc.
-    DataBase-->>API: List of matching places
-    API-->>Client: Results
+    User->>API: GET /places?city=Paris
+    API->>Logic: get places by city
+    Logic->DataBase: Query places based on the criterias
+    DataBase-->>Logic: List of places
+    Logic-->>API: Return List
+    API-->>User: List of places successfully returned
