@@ -1,18 +1,12 @@
 ### Sequence Diagram: Fetching a List of Places
 
-```mermaid
 sequenceDiagram
     participant Client
     participant API
-    participant PlaceService
-    participant PlaceRepo
     participant DataBase
 
-    Client->>API: GET /places?city_id=123
-    API->>PlaceService: get_places_by_city(123)
-    PlaceService->>PlaceRepo: fetch_places(city_id)
-    PlaceRepo->>DB: SELECT * FROM places WHERE city_id=123
-    DataBase-->>PlaceRepo: List of places
-    PlaceRepo-->>PlaceService: Places found
-    PlaceService-->>API: Response(place_list)
-    API-->>Client: 200 OK + places[]
+    Client->>API: Get places (e.g., city=Paris)
+    API->>DataBase: Filter by city
+    API->>DataBase: Filter by price, guests, etc.
+    DataBase-->>API: List of matching places
+    API-->>Client: Results
