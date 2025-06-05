@@ -2,18 +2,15 @@
 
 ```mermaid
 sequenceDiagram
-    participant Client
+    participant User
     participant API
     participant PlaceService
-    participant PlaceRepo
     participant DataBase
 
-    Client->>API: POST /places
-    API->>PlaceService: create_place(data)
-    PlaceService->>PlaceRepo: save_place(data)
-    PlaceRepo->>DB: INSERT INTO places ...
-    DataBase-->>PlaceRepo: OK
-    PlaceRepo-->>PlaceService: Place created
-    PlaceService-->>API: Response(place_id)
-    API-->>Client: 201 Created
+    User->>API: Request to create a new place
+    API->>PlaceService: Validate data and create place
+    PlaceService->>DataBase: Save place to database
+    DataBase-->>PlaceService: Return saved place with ID
+    PlaceService-->>API: Return place object
+    API-->>User: Response with success
 
