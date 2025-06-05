@@ -4,16 +4,13 @@
 sequenceDiagram
     participant Client
     participant API
-    participant UserService
-    participant UserRepo
     participant DataBase
+    participant EmailService
 
-    Client->>API: POST /users/register
-    API->>UserService: register_user(data)
-    UserService->>UserRepo: save_user(data)
-    UserRepo->>DB: INSERT INTO users ...
-    DataBase-->>UserRepo: OK
-    UserRepo-->>UserService: User created
-    UserService-->>API: Response(user_id)
-    API-->>Client: 201 Created
+    Client->>API: Register
+    API->>DataBase: Save user(client)
+    DataBase->>API: Send confirmation for the request (OK)
+    API->> EmailService: Send confirmation email
+    EmailService-->>API: Email sent
+    API-->>Client: User created and email sent
 
