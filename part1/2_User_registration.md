@@ -2,15 +2,15 @@
 
 ```mermaid
 sequenceDiagram
-    participant Client
+    participant User
     participant API
     participant DataBase
     participant EmailService
 
-    Client->>API: Register
-    API->>DataBase: Save user(client)
+    User->>API: Register
+    API->>DataBase: Save User
     DataBase->>API: Send confirmation for the request (OK)
     API->> EmailService: Send confirmation email
     EmailService-->>API: Email sent
-    API-->>Client: User created and email sent
+    API-->>User: User created and email sent
 
