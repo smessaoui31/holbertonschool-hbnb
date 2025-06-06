@@ -329,7 +329,7 @@ Team: 👥 - [Mr Phillips](https://github.com/ddoudou7) - [Sofian](https://githu
 | Term                       | Definition                                                                                      |
 |---------------------------|-------------------------------------------------------------------------------------------------|
 | API                   | Application Programming Interface – a way for different software parts to communicate.          |
-| BaseModel             | The base class from which all models inherit. Provides common attributes like id, created_at, and updated_at. |
+| BaseModel             | The base class from which all models inherit. Provides common attributes like ```id```, ```created_at```, and ```updated_at```. |
 | Business Logic Layer  | Part of the architecture where the core logic and rules of the application live.                |
 | Class Diagram         | A diagram showing the structure of classes and their relationships in the codebase.             |
 | CRUD                  | Create, Read, Update, Delete – the four basic operations for managing data.                     |
