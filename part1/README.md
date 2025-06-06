@@ -8,7 +8,7 @@ The goal of this task is to create a **high-level package diagram** that illustr
 
 The HBnB Evolution system follows a classic **3-layer architecture**:
 
-### 0.High-Level Package Diagram
+### High-Level Package Diagram
 
 ```mermaid
 classDiagram
@@ -62,7 +62,7 @@ BusinessLogic --> Persistence : Database Access
 
 
 ---
-### 1-Detailed Class Diagram for Business Logic Layer
+### Detailed Class Diagram for Business Logic Layer
 ```mermaid
 classDiagram
     class BaseModel {
@@ -150,9 +150,9 @@ classDiagram
   •	🧭 ```Place o-- "*" Amenity```: A place can have many amenities (composition relationship).
 
 
+## 🔁API Interaction Flow – Sequence Diagrams
 
-
-### 2_User Registration
+### 👤User Registration
 
 ```mermaid
 sequenceDiagram
@@ -195,7 +195,7 @@ sequenceDiagram
 📌 This flow ensures that user data is stored and that the user is notified via email.
 
 
-### 3-Place_Creation
+### 🏠Place_Creation
 
 ```mermaid
 sequenceDiagram
@@ -230,7 +230,7 @@ sequenceDiagram
 
 📌 This flow ensures that new places are created properly, validated before saving, and immediately available to the user.
 
-### 4-Review Submission
+### ✍️Review Submission
 
 ```mermaid
 sequenceDiagram
@@ -266,7 +266,7 @@ sequenceDiagram
 📌 This process ensures that reviews are properly validated and stored, keeping feedback reliable and consistent.
 
 
-### 5-Fetching Places
+### 🔍Fetching Places
 
 ```mermaid
 sequenceDiagram
@@ -299,3 +299,25 @@ sequenceDiagram
   •	🧭 ```API → User```: The user receives a response with the filtered list of places.
 
 📌 This allows users to easily find available places based on their preferences (location, price, etc.).
+---
+
+## ✅ Conclusion
+
+This document consolidates all major technical components of the HBnB system:
+
+- **Layered architecture** ensures modular design.
+- **Class relationships** define core data interactions.
+- **Sequence diagrams** map out real-time data flow across layers.
+
+---
+
+## 🔧 Tools and Technologies
+- **Mermaid.js** for diagramming.
+- **API principles** for designing the API flow.
+- **UML Standards** for consistency and readability in sequence diagram creation.
+---
+
+## ✍️ Author
+
+Holberton School — HBnB Project   
+Team: 👥 Sofian - Mr Philips - Evgeni
