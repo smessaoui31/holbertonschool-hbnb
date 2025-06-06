@@ -321,3 +321,31 @@ This document consolidates all major technical components of the HBnB system:
 
 Holberton School — HBnB Project   
 Team: 👥 - [Mr Phillips](https://github.com/ddoudou7) - [Sofian](https://github.com/smessaoui31) - [Evgeni](https://github.com/Genia888)
+
+---
+ 
+## 🧑‍💻Glossary
+
+| Term                       | Definition                                                                                      |
+|---------------------------|-------------------------------------------------------------------------------------------------|
+| API                   | Application Programming Interface – a way for different software parts to communicate.          |
+| BaseModel             | The base class from which all models inherit. Provides common attributes like id, created_at, and updated_at. |
+| Business Logic Layer  | Part of the architecture where the core logic and rules of the application live.                |
+| Class Diagram         | A diagram showing the structure of classes and their relationships in the codebase.             |
+| CRUD                  | Create, Read, Update, Delete – the four basic operations for managing data.                     |
+| Database              | A structured storage system to save and retrieve information.                                   |
+| DTO                   | Data Transfer Object – an object that carries data between layers.                              |
+| Entity                | A real-world object or concept represented in code as a class (e.g., User, Place).              |
+| Facade Pattern        | A design pattern that simplifies interactions by exposing a unified interface to a complex system. |
+| Frontend              | The part of the application users interact with – the user interface.                           |
+| Layered Architecture  | A design that separates concerns into different layers (e.g., Presentation, Logic, Database).    |
+| Mermaid.js            | A tool to generate diagrams (like class or sequence diagrams) using simple Markdown-style syntax. |
+| Model                 | A Python class that represents data and behaviors in the system (e.g., Place, Review).           |
+| OOP                   | Object-Oriented Programming – a way of coding using classes and objects.                         |
+| Persistence Layer     | The part of the system responsible for saving and retrieving data from the database.            |
+| Presentation Layer    | The user-facing part of the system, typically APIs or user interfaces.                          |
+| Repository            | A component that handles communication between business logic and the database.                 |
+| Review                | Feedback left by a user about a specific place.                                                  |
+| Sequence Diagram      | A diagram showing the order of messages or interactions between parts of the system.             |
+| UML                   | Unified Modeling Language – a standardized way to describe and design systems visually.          |
+| UUID                  | Universally Unique Identifier – a unique ID used to identify entities like users or places.     |
