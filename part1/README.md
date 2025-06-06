@@ -298,7 +298,7 @@ sequenceDiagram
 	
   •	🧭 ```API → User```: The user receives a response with the filtered list of places.
 
-📌 This allows users to easily find available places based on their preferences (location, price, etc.).
+##📌 This allows users to easily find available places based on their preferences (location, price, etc.).
 ---
 
 ## ✅ Conclusion
