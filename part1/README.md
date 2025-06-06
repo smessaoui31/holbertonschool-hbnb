@@ -133,12 +133,169 @@ classDiagram
 	
   •	```Review```: Feedback written by a user about a specific place.
 
-🔗 Relationships
-	
-  •	A ```Place``` is owned by one User.
+---
 
-  •	A ```Review``` is written by one User and is about one Place.
-	
-  •	A ```Place``` has many Amenities ```(Place o-- "*" Amenity)```, meaning a place can include several features.
 
-⸻
+🧭 Class Relationships
+
+	
+  •	🧭 ```User → BaseModel```: Inherits from BaseModel (as do all other main classes).
+
+  •	🧭 ```Place → User```: A place is owned by one user.
+	
+  •	🧭 ```Review → User```: A review is written by one user.
+	
+  •	🧭 ```Review → Place```: A review is about one specific place.
+	
+  •	🧭 ```Place o-- "*" Amenity```: A place can have many amenities (composition relationship).
+
+
+
+
+### 2_User Registration
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant API
+    participant DataBase
+    participant EmailService
+
+    User->>API: Register
+    API->>DataBase: Save User
+    DataBase->>API: Send confirmation for the request (OK)
+    API->> EmailService: Send confirmation email
+    EmailService-->>API: Email sent
+    API-->>User: User created and email sent
+```
+
+
+	
+🔍 Explanation of Interactions
+
+	
+  •	🔁
+ ```User → API``` : The user submits a registration form.
+	
+  •	🔁
+ ```API → DataBase``` : The API sends the user’s data to the database to save the new account.
+	
+  •	🔁
+ ```DataBase → API``` : The database confirms that the user was successfully saved.
+	
+  •	🔁
+ ```API → EmailService``` : The API requests to send a confirmation email to the new user.
+	
+  •	🔁
+ ```EmailService → API``` : Email service confirms the email was sent.
+	
+  •	🔁
+ ```API → User``` : The API returns a success message to the user, saying the account was created and email was sent.
+
+📌 This flow ensures that user data is stored and that the user is notified via email.
+
+
+### 3-Place_Creation
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant API
+    participant PlaceService
+    participant DataBase
+
+    User->>API: Request to create a new place
+    API->>PlaceService: Validate data and create place
+    PlaceService->>DataBase: Save place to database
+    DataBase-->>PlaceService: Return saved place with ID
+    PlaceService-->>API: Return place object
+    API-->>User: Response with success
+  ```
+
+
+🔍 Explanation of Interactions
+
+	
+  •	🧭 ```User → API```: The user sends a request with place information (e.g., name, price, location).
+	
+  •	🧭 ```API → PlaceService```: The API forwards the request to the logic layer to validate and process the data.
+	
+  •	🧭 ```PlaceService → DataBase```: The validated place is saved to the database.
+	
+  •	🧭 ```DataBase → PlaceService```: The database confirms the place has been saved and returns its ID.
+	
+  •	🧭 ```PlaceService → API```: The logic layer sends back the new place object.
+	
+  •	🧭 ```API → User```: The user receives a success response with the place data.
+
+📌 This flow ensures that new places are created properly, validated before saving, and immediately available to the user.
+
+### 4-Review Submission
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant API
+    participant ReviewService
+    participant Database
+
+    User->>API: Submit review (rating, comment)
+    API->>ReviewService: Check and process review
+    ReviewService->>Database: Save review
+    Database-->>ReviewService: Confirm review saved
+    ReviewService-->>API: Send confirmation
+    API-->>User: Review submitted successfully
+```
+
+🔍 Explanation of Interactions
+	
+
+•	🧭 ```User → API```: The user sends a review with a rating and comment.
+
+	
+•	🧭 ```API → ReviewService```: The API forwards the data to the logic layer to validate the review.
+
+•	🧭 ```ReviewService → Database```: The validated review is saved in the database.
+
+•	🧭 ```Database → ReviewService```: The database confirms that the review has been saved.
+
+•	🧭 ```ReviewService → API```: The service sends back a confirmation.
+
+•	🧭 ```API → User```: The user receives a success message.
+
+📌 This process ensures that reviews are properly validated and stored, keeping feedback reliable and consistent.
+
+
+### 5-Fetching Places
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant API
+    participant Logic
+    participant DataBase
+
+    User->>API: GET /places?city=Paris
+    API->>Logic: get places by city
+    Logic->DataBase: Query places based on the criterias
+    DataBase-->>Logic: List of places
+    Logic-->>API: Return List
+    API-->>User: List of places successfully returned
+```
+
+🔍 Explanation of Interactions
+
+	
+  •	🧭 ```User → API```: The user requests a list of places using a filter (e.g., city=Paris).
+	
+  •	🧭 ```API → Logic```: The API passes the filter to the logic layer to process the request.
+	
+  •	🧭 ```Logic → DataBase```: The logic layer builds and runs a database query using the criteria.
+	
+  •	🧭 ```DataBase → Logic```: The database returns all matching places.
+	
+  •	🧭 ```Logic → API```: The logic layer sends the final list to the API.
+	
+  •	🧭 ```API → User```: The user receives a response with the filtered list of places.
+
+📌 This allows users to easily find available places based on their preferences (location, price, etc.).
