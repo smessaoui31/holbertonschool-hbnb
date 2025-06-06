@@ -1,5 +1,5 @@
 ### High-Level Package Diagram
-````mermaid
+```mermaid
 classDiagram
 class Presentation {
   <<Interface>>
@@ -23,3 +23,4 @@ class Persistence {
 
 Presentation --> BusinessLogic : Facade Pattern
 BusinessLogic --> Persistence : Database Access
+```
