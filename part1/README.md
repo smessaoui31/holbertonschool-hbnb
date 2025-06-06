@@ -320,7 +320,4 @@ This document consolidates all major technical components of the HBnB system:
 ## ✍️ Author
 
 Holberton School — HBnB Project   
-Team: 👥 - 
-- [Mr Phillips](https://github.com/ddoudou7)     
-- [Sofian](https://github.com/smessaoui31)
-- [Evgeni](https://github.com/Genia888)
+Team: 👥 - [Mr Phillips](https://github.com/ddoudou7) - [Sofian](https://github.com/smessaoui31) - [Evgeni](https://github.com/Genia888)
