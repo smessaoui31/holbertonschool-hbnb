@@ -7,21 +7,33 @@ The goal of this task is to create a **high-level package diagram** that illustr
 ## 🧱 Layered Architecture Overview
 
 The HBnB Evolution system follows a classic **3-layer architecture**:
-```
-+–––––––––––––+–––––––––––––
-|  Presentation Layer      |  <– What the user sees and uses
-|  (Website, API, forms)   |
-+–––––––––––––+–––––––––––––
-|
-v
-+–––––––––––––+–––––––––––––
-|  Business Logic Layer    |  <– Application rules and processes
-+–––––––––––––+–––––––––––––
-|
-v
-+–––––––––––––+–––––––––––––
-|  Persistence Layer       |  <– Where data is stored (Database)
-+–––––––––––––+–––––––––––––
+
+### High-Level Package Diagram
+
+```mermaid
+classDiagram
+class Presentation {
+  <<Interface>>
+  +Services
+  +API endpoints
+}
+class BusinessLogic {
+  <<Core Models>>
+  +User
+  +Place
+  +Review
+  +Amenity
+}
+class Persistence {
+    <<DataStorage>>
+  +Database
+  +Repository
+  +data_save()
+  +data_fetch()
+}
+
+Presentation --> BusinessLogic : Facade Pattern
+BusinessLogic --> Persistence : Database Access
 ```
 ### 1. Presentation Layer (API / Services)
 - This layer handles the interaction between the user and the application. It includes all the services and APIs that are exposed to the users.
