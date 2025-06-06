@@ -8,7 +8,7 @@ The goal of this task is to create a **high-level package diagram** that illustr
 
 The HBnB Evolution system follows a classic **3-layer architecture**:
 
-### High-Level Package Diagram
+### 0.High-Level Package Diagram
 
 ```mermaid
 classDiagram
@@ -51,7 +51,6 @@ BusinessLogic --> Persistence : Database Access
 - This layer is responsible for data storage and retrieval, interacting directly with the database..
 
 
----
 
 ## 🔁 Communication Flow
 
@@ -61,78 +60,9 @@ BusinessLogic --> Persistence : Database Access
 - **Business Logic → Persistence:**  
   Business logic components access data through well-defined **Repository** or **DAO** interfaces, abstracting the database layer.
 
+
 ---
-
-## 📊 Diagram
-
-The high-level package structure is represented below using **UML syntax (Mermaid.js)**:
-
-```mermaid
-classDiagram
-class Presentation {
-  <<Interface>>
-  +Services
-  +API endpoints
-}
-class BusinessLogic {
-  <<Core Models>>
-  +User
-  +Place
-  +Review
-  +Amenity
-}
-class Persistence {
-    <<DataStorage>>
-  +Database
-  +Repository
-  +data_save()
-  +data_fetch()
-}
-
-Presentation --> BusinessLogic : Facade Pattern
-BusinessLogic --> Persistence : Database Access
-```
-
-🔍 Diagram Explanation
-
-1. Presentation Layer (Presentation)
-	•	This is what users interact with.
-	
-  •	It includes:
-
-	  •	The website or frontend interface
-	  •	API endpoints like /api/v1/users
-	  •	It receives requests from users and sends back responses.
-
-2. Business Logic Layer (BusinessLogic)
-
-	•	This layer contains the core logic and decision-making.
-	
-    •	It works with the main models: User, Place, Review, Amenity.
-	
-    •	 It validates input, applies rules, and controls the data flow.
-
-3. Persistence Layer (Persistence)
-
-	  •	This is the data storage layer.
-	
-    •	It connects to the database and manages how data is saved and retrieved.
-	
-    •	Methods like data_save() and data_fetch() are used to interact with the database.
-
-⸻
-
-🔁 Layer Interactions
-	
-  ```•	Presentation → Business Logic:```
-  
-  Uses the Facade Pattern, meaning the interface communicates through a single, simplified entry point into the logic layer.```
-	
- ``` •	Business Logic → Persistence:```
-
-The logic layer accesses the database to save or retrieve data as needed.
-
-### Detailed Class Diagram for Business Logic Layer
+### 1-Detailed Class Diagram for Business Logic Layer
 ```mermaid
 classDiagram
     class BaseModel {
