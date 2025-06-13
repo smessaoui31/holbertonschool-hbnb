@@ -12,7 +12,7 @@ This project is part of the HBnB web application and focuses on building the **B
 - Build a facade layer to connect the API and business logic
 
 ## 🗂️ Project Structure
-
+```
 hbnb/
 ├── app/
 │   ├── __init__.py
