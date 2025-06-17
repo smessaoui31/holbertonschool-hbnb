@@ -9,3 +9,5 @@ main*.py
 *_2*
 **venv/
 *test.py
+test_user_dict.py
+test_review.py
