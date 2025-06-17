@@ -8,3 +8,4 @@ main*.py
 *my*
 *_2*
 **venv/
+*test.py
