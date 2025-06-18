@@ -26,4 +26,13 @@ class HBnBFacade:
         # Logic will be implemented in later tasks
         pass
 
+    def create_place(self, place_data):
+        pass
+
+    def get_all_places(self,):
+        # Logic to retrieve all places
+
+    def update_place(self , place_id, place_data):
+        # logic to update the places
+        pass
 facade = HBnBFacade()
