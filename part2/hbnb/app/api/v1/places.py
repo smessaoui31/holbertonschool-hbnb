@@ -14,7 +14,6 @@ user_model =  api.model('PlaceUser', {
     'first_name': fields.String(description='First name of the owner'),
     'last_name' : fields.String(description='Last name of the owner'),
     'email' : fields.String(description='Email of the owner')
-
 })
 
 review_model = api.model('PlaceReview', {
@@ -40,7 +39,6 @@ review_model = api.model('PlaceReview', {
     'text': fields.String(description='Text of the review'),
     'rating': fields.Integer(description='Rating of the place (1-5)'),
     'user_id': fields.String(description='ID of the user')
-
 })
 
 @api.route('/')
