@@ -25,3 +25,5 @@ class HBnBFacade:
     def get_place(self, place_id):
         # Logic will be implemented in later tasks
         pass
+
+facade = HBnBFacade()
