@@ -2,6 +2,7 @@ from app.persistence.repository import InMemoryRepository
 from app.models.user import User
 from app.models.place import Place
 from app.models.amenity import Amenity
+from app.models.review import Review
 
 class HBnBFacade:
     def __init__(self):
@@ -89,6 +90,60 @@ class HBnBFacade:
         if 'name' in amenity_data:
             amenity.name = amenity_data['name']
         return amenity
+
+ #----- Review -----
+    def create_review(self, review_data, user_id, rating, place_id):
+    #Create a review, including validation for user_id, place_id, and rating
+        user = self.get_user(user_id)
+        if not user:
+            raise ValueError("User not found.")
+
+        place = self.get_place(place_id)
+        if not place:
+            raise ValueError("Place not found.")
+
+        review = Review(
+            text=review_data["text"],
+            user_id=user.id,
+            place_id=place.id,
+            rating=rating,
+        )
+        self.review_repo.add(review)
+        return review
+
+    def get_review(self, review_id):
+        review = self.review_repo.get(review_id)
+        if not review:
+            raise ValueError("Review not found")
+        return review
+
+    def get_all_reviews(self):
+        return self.review_repo.get_all()
+
+    def get_reviews_by_place(self, place_id):
+        place = self.place_repo.get(place_id)
+        if not place:
+            raise ValueError("Place not found")
+        return [review for review in
+                self.review_repo.get_all() if review.place_id == place_id]
+
+    def update_review(self, review_id, review_data):
+        review = self.review_repo.get(review_id)
+        if not review:
+            raise ValueError("Review not found")
+        for key, value in review_data.items():
+            if hasattr(review, key):
+                setattr(review, key, value)
+        self.review_repo.update(review_id, review.__dict__)
+        return review
+
+    def delete_review(self, review_id):
+        review = self.review_repo.get(review_id)
+        if not review:
+            raise ValueError("Review not found")
+        self.review_repo.delete(review_id)
+        return {'message': 'Review deleted succesessfully'}
+
 
 # Instance globale
 facade = HBnBFacade()
