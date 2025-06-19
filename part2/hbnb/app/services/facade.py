@@ -30,7 +30,7 @@ class HBnBFacade:
             price=place_data['price'],
             latitude=place_data['latitude'],
             longitude=place_data['longitude'],
-            owner=place_data.get('owner_id')  # ✅ on prend juste l’ID, pas d'objet User
+            owner=place_data.get('owner_id')  # on prend juste l’ID, pas d'objet User
         )
 
         for amenity_id in place_data.get('amenities', []):
