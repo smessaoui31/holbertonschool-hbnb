@@ -25,10 +25,10 @@ class ReviewList(Resource):
                 return {'message': 'Missing required fields'}, 400
 
             new_review = facade.create_review(
-                review_data['text'],
+                review_data,
                 review_data['user_id'],
-                review_data['place_id'],
-                review_data['rating']
+                review_data['rating'],
+                review_data['place_id']
             )
 
             return {
@@ -64,9 +64,6 @@ class ReviewResource(Resource):
         """Get review details by ID"""
         try:
             review = facade.get_review(review_id)
-            if not review:
-                return {'error': 'Review not found'}, 404
-
             return {
                 'id': review.id,
                 'text': review.text,
@@ -75,7 +72,7 @@ class ReviewResource(Resource):
                 'place_id': review.place_id
             }, 200
         except ValueError as e:
-            return {'error': str(e)}, 400
+            return {'error': str(e)}, 404
 
     @api.expect(review_model)
     @api.response(200, 'Review updated successfully')
@@ -85,10 +82,6 @@ class ReviewResource(Resource):
         """Update a review's information"""
         review_data = api.payload
         try:
-            review = facade.get_review(review_id)
-            if not review:
-                return {'error': 'Review not found'}, 404
-
             updated_review = facade.update_review(review_id, review_data)
             return {
                 'id': updated_review.id,
@@ -98,19 +91,17 @@ class ReviewResource(Resource):
                 'place_id': updated_review.place_id
             }, 200
         except ValueError as e:
-            return {'error': str(e)}, 400
+            return {'error': str(e)}, 404
 
     @api.response(200, 'Review deleted successfully')
     @api.response(404, 'Review not found')
     def delete(self, review_id):
         """Delete a review"""
         try:
-            review = facade.delete_review(review_id)
-            if review:
-                return {'message': 'Review deleted.'}, 200
-            return {'error': 'Review not found'}, 404
+            result = facade.delete_review(review_id)
+            return result, 200
         except ValueError as e:
-            return {'error': str(e)}, 400
+            return {'error': str(e)}, 404
 
 @api.route('/places/<place_id>/reviews')
 class PlaceReviewList(Resource):
@@ -124,9 +115,11 @@ class PlaceReviewList(Resource):
                 {
                     'id': review.id,
                     'text': review.text,
-                    'rating': review.rating
+                    'rating': review.rating,
+                    'user_id': review.user_id,
+                    'place_id': review.place_id
                 }
                 for review in place_reviews
             ], 200
         except ValueError as e:
-            return {'error': str(e)}, 400
+            return {'error': str(e)}, 404
