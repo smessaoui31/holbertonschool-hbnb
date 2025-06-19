@@ -44,8 +44,8 @@ class PlaceList(Resource):
         try:
             created_place = facade.create_place(data)
             return created_place, 201
-        except Exception as e:
-            return {'message': str(e)}, 400
+        except Exception as error:
+            return {'message': str(error)}, 400
 
     @api.response(200, 'List of places retrieved successfully')
     def get(self):
@@ -53,8 +53,8 @@ class PlaceList(Resource):
         try:
             places = facade.get_all_places()
             return places, 200
-        except Exception as e:
-            return {'message': str(e)}, 500
+        except Exception as error:
+            return {'message': str(error)}, 500
 
 @api.route('/<place_id>')
 class PlaceResource(Resource):
@@ -79,5 +79,5 @@ class PlaceResource(Resource):
             if updated_place:
                 return updated_place.to_dict(), 200
             return {'message': 'Place not found'}, 404
-        except Exception as e:
-            return {'message': str(e)}, 400
+        except Exception as error:
+            return {'message': str(error)}, 400
