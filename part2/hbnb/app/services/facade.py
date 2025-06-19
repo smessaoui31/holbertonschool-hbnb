@@ -1,6 +1,7 @@
 from app.persistence.repository import InMemoryRepository
 from app.models.user import User
-
+from app.models.place import Place
+from app.models.amenity import Amenity
 
 class HBnBFacade:
     def __init__(self):
@@ -9,7 +10,7 @@ class HBnBFacade:
         self.review_repo = InMemoryRepository()
         self.amenity_repo = InMemoryRepository()
 
-        # Placeholder method for creating a user
+    # ----- USER -----
     def create_user(self, user_data):
         user = User(**user_data)
         self.user_repo.add(user)
@@ -21,60 +22,73 @@ class HBnBFacade:
     def get_user_by_email(self, email):
         return self.user_repo.get_by_attribute('email', email)
 
-        # Placeholder method for fetching a place by ID
+    # ----- PLACE -----
     def create_place(self, place_data):
-        # Placeholder for logic to create a place, including validation for price, latitude, and longitude
-        pass
+        place = Place(
+            title=place_data['title'],
+            description=place_data.get('description', ''),
+            price=place_data['price'],
+            latitude=place_data['latitude'],
+            longitude=place_data['longitude'],
+            owner=place_data.get('owner_id')  # ✅ on prend juste l’ID, pas d'objet User
+        )
+
+        for amenity_id in place_data.get('amenities', []):
+            amenity = self.amenity_repo.get(amenity_id)
+            if amenity:
+                place.add_amenity(amenity)
+            else:
+                raise ValueError(f"Amenity with id {amenity_id} does not exist")
+
+        self.place_repo.add(place)
+        return place.to_dict()
 
     def get_place(self, place_id):
-        # Placeholder for logic to retrieve a place by ID, including associated owner and amenities
-        pass
+        place = self.place_repo.get(place_id)
+        if place:
+            return place
+        return None
 
     def get_all_places(self):
-        # Placeholder for logic to retrieve all places
-        pass
+        return [place.to_dict() for place in self.place_repo.get_all()]
 
     def update_place(self, place_id, place_data):
-        # Placeholder for logic to update a place
-        pass
+        place = self.get_place(place_id)
+        if not place:
+            return None
 
-    def create_review(self, review_data):
-        # Placeholder for logic to create a review, including validation for user_id, place_id, and rating
-        pass
+        for key in ['title', 'description', 'price', 'latitude', 'longitude']:
+            if key in place_data:
+                setattr(place, key, place_data[key])
 
-    def get_review(self, review_id):
-        # Placeholder for logic to retrieve a review by ID
-        pass
+        if 'amenities' in place_data:
+            place.amenities = []  # reset
+            for amenity_id in place_data['amenities']:
+                amenity = self.amenity_repo.get(amenity_id)
+                if amenity:
+                    place.add_amenity(amenity)
 
-    def get_all_reviews(self):
-        # Placeholder for logic to retrieve all reviews
-        pass
+        return place
 
-    def get_reviews_by_place(self, place_id):
-        # Placeholder for logic to retrieve all reviews for a specific place
-        pass
-
-    def update_review(self, review_id, review_data):
-        # Placeholder for logic to update a review
-        pass
-
-    def delete_review(self, review_id):
-        # Placeholder for logic to delete a review
-        pass
-
+    # ----- AMENITY -----
     def create_amenity(self, amenity_data):
-    # Placeholder for logic to create an amenity
-        pass
+        amenity = Amenity(**amenity_data)
+        self.amenity_repo.add(amenity)
+        return amenity
 
-def get_amenity(self, amenity_id):
-    # Placeholder for logic to retrieve an amenity by ID
-    pass
+    def get_amenity(self, amenity_id):
+        return self.amenity_repo.get(amenity_id)
 
-def get_all_amenities(self):
-    # Placeholder for logic to retrieve all amenities
-    pass
+    def get_all_amenities(self):
+        return self.amenity_repo.get_all()
 
-def update_amenity(self, amenity_id, amenity_data):
-    # Placeholder for logic to update an amenity
-    pass
+    def update_amenity(self, amenity_id, amenity_data):
+        amenity = self.get_amenity(amenity_id)
+        if not amenity:
+            return None
+        if 'name' in amenity_data:
+            amenity.name = amenity_data['name']
+        return amenity
+
+# Instance globale
 facade = HBnBFacade()
