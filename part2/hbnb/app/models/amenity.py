@@ -15,6 +15,9 @@ class Amenity(BaseModel):
         return f"[Amenity] ({self.id}) {self.name}"
     
     def to_dict(self):
-        dict_repr = super().to_dict()  # hérite probablement d'un to_dict dans BaseModel
-        dict_repr["name"] = self.name
-        return dict_repr
+        return {
+            "id": self.id,
+            "name" : self.name,
+            "created_at": self.created_at.isoformat(),
+            "updated_at": self.updated_at.isoformat()
+        }
