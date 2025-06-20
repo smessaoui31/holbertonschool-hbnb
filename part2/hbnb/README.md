@@ -157,8 +157,6 @@ By the end of this part, the project supports:
   - `curl`
   - Postman
   - Swagger UI
-- (Optional) Automated testing with `unittest` or `pytest`
-- Edge case handling (e.g., missing objects, invalid fields)
 
 ---
 
