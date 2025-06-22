@@ -14,7 +14,7 @@ def create_app():
     # Register the users namespace
     api.add_namespace(users_ns, path='/api/v1/users')
     api.add_namespace(places_ns, path='/api/v1/places')
-    api.add_namespace(aminities_ns, path='/api/v1/amenity')
+    api.add_namespace(aminities_ns, path='/api/v1/ameneties')
     api.add_namespace(reviews_ns, path='/api/v1/reviews')
     
     return app
