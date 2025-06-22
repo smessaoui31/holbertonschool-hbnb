@@ -1,4 +1,9 @@
 import unittest
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# Permet d'importer 'app' proprement même quand le test est lancé directement
 from app import create_app
 
 class TestUserEndpoints(unittest.TestCase):
@@ -22,3 +27,6 @@ class TestUserEndpoints(unittest.TestCase):
             "email": "invalid"
         })
         self.assertEqual(response.status_code, 400)
+
+if __name__ == "__main__":
+    unittest.main()

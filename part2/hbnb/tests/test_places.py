@@ -1,4 +1,10 @@
 import unittest
+import sys
+import os
+
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# Permet d'importer 'app' proprement même quand le test est lancé directement
 from app import create_app
 
 class TestPlaceEndpoints(unittest.TestCase):
@@ -29,3 +35,6 @@ class TestPlaceEndpoints(unittest.TestCase):
     def test_create_place_invalid_data(self):
         response = self.client.post('/api/v1/places/', json={})
         self.assertEqual(response.status_code, 400)
+
+if __name__ == "__main__":
+    unittest.main()
