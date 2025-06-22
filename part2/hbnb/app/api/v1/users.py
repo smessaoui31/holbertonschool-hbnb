@@ -21,6 +21,23 @@ class UserList(Resource):
         """Register a new user"""
         user_data = api.payload
 
+        if not user_data.get("email") or "@" not in user_data["email"]:
+            return {"error": "Invalid email"}, 400
+        
+        if not user_data.get("first_name") or not user_data.get("last_name"):
+            return {"error": "Missing first name or last name"}, 400
+        
+        try:
+            new_user = facade.create_user(user_data)
+            return {
+                "id": new_user.id,
+                "first_name": new_user.first_name,
+                "last_name": new_user.last_name,
+                "email": new_user.email
+            }, 201
+        except Exception as e:
+            return {"error": str(e)}, 400
+
         # Simulate email uniqueness check (to be replaced by real validation with persistence)
         existing_user = facade.get_user_by_email(user_data['email'])
         if existing_user:
@@ -39,4 +56,9 @@ class UserResource(Resource):
         user = facade.get_user(user_id)
         if not user:
             return {'error': 'User not found'}, 404
-        return {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email}, 200
+        
+        return {'id': user.id,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email
+        }, 200

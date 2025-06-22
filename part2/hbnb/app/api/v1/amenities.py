@@ -17,6 +17,8 @@ class AmenityList(Resource):
         """Register a new amenity"""
         # Placeholder for the logic to register a new amenity
         data = api.payload
+        if not data.get("name"):
+            return {'message': 'Name is required'}, 400
         try:
             new_amenity = facade.create_amenity(data)
             return new_amenity.to_dict(), 201
