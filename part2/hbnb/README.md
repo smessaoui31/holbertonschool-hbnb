@@ -150,15 +150,160 @@ By the end of this part, the project supports:
 
 ---
 
-### 6. ✅ Validation & Testing
+# 🧪 HBnB API Testing Guide
 
-- Input validation: required fields, types, data constraints
-- Manual testing with:
-  - `curl`
-  - Postman
-  - Swagger UI
+This document describes how to run unit tests and perform manual testing using `curl` for your Flask REST API.
 
 ---
+
+## 📦 Project Structure
+
+```
+project_root/
+├── part2/
+│   └── hbnb/
+│       ├── app/
+│       ├── tests/
+│       │   ├── __init__.py
+│       │   ├── test_users.py
+│       │   ├── test_places.py
+│       │   ├── test_amenities.py
+│       │   ├── test_reviews.py
+│       │   └── ...
+│       ├── ...
+│       └── app.py (or create_app.py)
+```
+
+---
+
+## 🧪 Running Unit Tests
+
+### ✅ Run All Tests:
+
+Make sure your virtual environment is activated and the PYTHONPATH is set:
+
+```bash
+export PYTHONPATH=$PYTHONPATH:$(pwd)/part2/hbnb
+python3 -m unittest discover part2/hbnb/tests
+```
+
+> All tests should pass:
+> ```
+> Ran 15 tests in 0.039s
+> OK
+> ```
+
+---
+
+## 🚀 Start the Flask API Server
+
+Before using `curl`, run your Flask API server:
+
+```bash
+cd part2/hbnb
+python3 app.py
+```
+
+> Make sure it's listening at: `http://localhost:5000`
+
+---
+
+## 🧪 Testing with `curl`
+
+### 1. ✅ Create a User
+
+```bash
+curl -X POST http://localhost:5000/api/v1/users/ \
+-H "Content-Type: application/json" \
+-d '{
+  "first_name": "Alice",
+  "last_name": "Wonderland",
+  "email": "alice@example.com"
+}'
+```
+---
+
+### 2. ✅ Create an Amenity
+
+```bash
+curl -X POST http://localhost:5000/api/v1/amenities/ \
+-H "Content-Type: application/json" \
+-d '{"name": "WiFi"}'
+```
+
+> Repeat for other amenities like `"Air Conditioning"`, `"Parking"`, etc.
+
+### 🔍 List Amenities and Get Their IDs:
+
+```bash
+curl http://localhost:5000/api/v1/amenities/
+```
+
+---
+
+### 3. ✅ Create a Place (use a valid user_id and amenity IDs)
+
+```bash
+curl -X POST http://localhost:5000/api/v1/places/ \
+-H "Content-Type: application/json" \
+-d '{
+  "title": "Charming Loft",
+  "description": "A cozy loft in the city center",
+  "price": 120.5,
+  "latitude": 48.8566,
+  "longitude": 2.3522,
+  "owner_id": "USER_ID",
+  "amenities": ["AMENITY_ID_1", "AMENITY_ID_2"]
+}'
+```
+
+---
+
+### 4. ✅ Create a Review
+
+```bash
+curl -X POST http://localhost:5000/api/v1/reviews/ \
+-H "Content-Type: application/json" \
+-d '{
+  "text": "Great location and clean space!",
+  "rating": 5,
+  "user_id": "USER_ID",
+  "place_id": "PLACE_ID"
+}'
+```
+
+---
+
+### 📖 More Endpoints (GET Examples)
+
+- List all users:  
+  `curl http://localhost:5000/api/v1/users/`
+
+- Get a user by ID:  
+  `curl http://localhost:5000/api/v1/users/<user_id>`
+
+- List all places:  
+  `curl http://localhost:5000/api/v1/places/`
+
+- Get a place by ID:  
+  `curl http://localhost:5000/api/v1/places/<place_id>`
+
+- Get all reviews for a place:  
+  `curl http://localhost:5000/api/v1/reviews/places/<place_id>/reviews`
+
+---
+
+## ✅ Summary
+
+| Test Type      | Description                        | Command |
+|----------------|------------------------------------|---------|
+| Unit Tests     | Run Python `unittest` suite        | `python3 -m unittest discover part2/hbnb/tests` |
+| Manual API Test| Run server & use `curl` requests   | `curl -X ...` |
+| API Docs       | Swagger (Flask-RESTx auto-gen)     | `http://localhost:5000/api/v1/` |
+
+Make sure your data (user, amenity, etc.) exists before linking them together (like in reviews or places).
+
+Happy testing! 🚀
 
 ## 📚 References
 
