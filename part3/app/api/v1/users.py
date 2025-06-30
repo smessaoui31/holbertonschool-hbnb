@@ -7,7 +7,8 @@ api = Namespace('users', description='User operations')
 user_model = api.model('User', {
     'first_name': fields.String(required=True, description='First name of the user'),
     'last_name': fields.String(required=True, description='Last name of the user'),
-    'email': fields.String(required=True, description='Email of the user')
+    'email': fields.String(required=True, description='Email of the user'),
+    'password': fields.String(required=True, description='User password (hashed before saving)')
 })
 
 
@@ -26,6 +27,9 @@ class UserList(Resource):
         
         if not user_data.get("first_name") or not user_data.get("last_name"):
             return {"error": "Missing first name or last name"}, 400
+        
+        if not user_data.get("password") or len(user_data["password"]) < 6:
+            return {"error": "Password must be at least 6 characters"}, 400
         
         try:
             new_user = facade.create_user(user_data)

@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from app.extensions import db, bcrypt
 from flask_restx import Api
 from app.api.v1.users import api as users_ns
 from app.api.v1.places import api as places_ns
@@ -15,6 +16,7 @@ def create_app(config_name="default"):
     app.config.from_object(config[config_name])
 
     db.init_app(app)
+    bcrypt.init_app(app)
     
     api = Api(app, version='1.0', title='HBnB API',
               description='HBnB Application API')
