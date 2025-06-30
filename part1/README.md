@@ -11,7 +11,7 @@ The HBnB Evolution system follows a classic **3-layer architecture**:
 ### High-Level Package Diagram
 
 ```mermaid
-classDiagram
+classDiagra
 class Presentation {
   <<Interface>>
   +Services
