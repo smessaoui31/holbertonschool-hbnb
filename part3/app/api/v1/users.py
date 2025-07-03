@@ -1,6 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.services.facade import facade
+from flask_jwt_extended import get_jwt
 
 api = Namespace('users', description='User operations')
 
@@ -77,7 +78,10 @@ class UserResource(Resource):
     def put(self, user_id):
         """Update user profile (excluding email and password)"""
         current_user_id = get_jwt_identity()
-        if current_user_id != user_id:
+        claims = get_jwt()
+        is_admin = claims.get("is_admin", False)
+
+        if current_user_id != user_id and not is_admin:  # Gere le cas d'un user non admin
             return {'error': 'Unauthorized action'}, 403
 
         data = api.payload
