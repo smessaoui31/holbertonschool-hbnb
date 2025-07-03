@@ -1,7 +1,6 @@
 from flask_restx import Namespace, Resource, fields
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from app.services.facade import facade
-from flask_jwt_extended import get_jwt
 
 api = Namespace('users', description='User operations')
 
@@ -26,13 +25,18 @@ class UserList(Resource):
 
         if not user_data.get("email") or "@" not in user_data["email"]:
             return {"error": "Invalid email"}, 400
-        
+
         if not user_data.get("first_name") or not user_data.get("last_name"):
             return {"error": "Missing first name or last name"}, 400
-        
+
         if not user_data.get("password") or len(user_data["password"]) < 6:
             return {"error": "Password must be at least 6 characters"}, 400
-        
+
+        # Check for existing email
+        existing_user = facade.get_user_by_email(user_data['email'])
+        if existing_user:
+            return {'error': 'Email already registered'}, 400
+
         try:
             new_user = facade.create_user(user_data)
             return {
@@ -44,14 +48,6 @@ class UserList(Resource):
         except Exception as e:
             return {"error": str(e)}, 400
 
-        # Simulate email uniqueness check (to be replaced by real validation with persistence)
-        existing_user = facade.get_user_by_email(user_data['email'])
-        if existing_user:
-            return {'error': 'Email already registered'}, 400
-
-        new_user = facade.create_user(user_data)
-        return {'id': new_user.id, 'first_name': new_user.first_name, 'last_name': new_user.last_name, 'email': new_user.email}, 201
-
 
 @api.route('/<user_id>')
 class UserResource(Resource):
@@ -62,13 +58,13 @@ class UserResource(Resource):
         user = facade.get_user(user_id)
         if not user:
             return {'error': 'User not found'}, 404
-        
-        return {'id': user.id,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'email': user.email
-        }, 200
 
+        return {
+            'id': user.id,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email
+        }, 200
 
     @api.expect(user_model, validate=False)
     @api.response(200, 'User successfully updated')
@@ -81,7 +77,7 @@ class UserResource(Resource):
         claims = get_jwt()
         is_admin = claims.get("is_admin", False)
 
-        if current_user_id != user_id and not is_admin:  # Gere le cas d'un user non admin
+        if current_user_id != user_id and not is_admin:
             return {'error': 'Unauthorized action'}, 403
 
         data = api.payload
