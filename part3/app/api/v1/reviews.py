@@ -1,7 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.services.facade import facade
-
+from flask_jwt_extended import get_jwt
 api = Namespace('reviews', description='Review operations')
 
 # Define the review model for input validation and documentation
@@ -22,10 +22,25 @@ class ReviewList(Resource):
         """Register a new review"""
         review_data = api.payload
         user_id = get_jwt_identity()  # Get from token
+        claims = get_jwt()
+        is_admin = claims.get("is_admin", False)
 
         if not review_data.get('text') or not review_data.get('rating') or not review_data.get('place_id'):
             return {'message': 'Missing required fields'}, 400
 
+        place = facade.get_place(review_data['place_id'])
+        if not place:
+            return {'error': 'Place not found'}, 404
+
+        # Si pas admin: interdire de reviewer sa propre place
+        if not is_admin and place.owner_id == user_id:
+            return {'error': 'You cannot review your own place'}, 403
+
+        # Si pas admin: vérifier qu’il n’a pas déjà reviewer cette place
+        existing_reviews = facade.get_reviews_by_place(review_data['place_id'])
+        if not is_admin and any(r.user_id == user_id for r in existing_reviews):
+            return {'error': 'You have already reviewed this place'}, 400
+        
         try:
             new_review = facade.create_review(
                 review_data,
