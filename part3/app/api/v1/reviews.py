@@ -34,7 +34,7 @@ class ReviewList(Resource):
             return {'error': 'Place not found'}, 404
 
         # Prevent reviewing own place (unless admin)
-        if not is_admin and place.owner_id == user_id:
+        if not is_admin and place.owner == user_id:
             return {'error': 'You cannot review your own place'}, 400
 
         # Prevent multiple reviews (unless admin)
