@@ -1,7 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from app.services.facade import facade
 from flask_jwt_extended import jwt_required, get_jwt_identity
-
+from flask_jwt_extended import get_jwt
 api = Namespace('places', description='Place operations')
 
 # Models
@@ -79,6 +79,9 @@ class PlaceResource(Resource):
     def put(self, place_id):
         """Update a place's information"""
         current_user_id = get_jwt_identity()
+        claims = get_jwt()
+        is_admin = claims.get("is_admin", False)
+        
         place = facade.get_place(place_id)
         if not place:
             return {'message': 'Place not found'}, 404
