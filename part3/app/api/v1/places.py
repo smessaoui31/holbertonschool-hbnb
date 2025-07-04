@@ -1,6 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from app.services.facade import facade
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
+from flask import request
 
 api = Namespace('places', description='Place operations')
 
@@ -98,3 +99,34 @@ class PlaceResource(Resource):
             return {'message': 'Place not found'}, 404
         except Exception as error:
             return {'message': str(error)}, 400
+        
+@api.route('/places/<place_id>')
+class AdminPlaceModify(Resource):
+    @jwt_required()
+    def put(self, place_id):
+        """Admins can modify any place; users only their own"""
+        claims = get_jwt()
+        user_id = get_jwt_identity()
+        is_admin = claims.get('is_admin', False)
+
+        place = facade.get_place(place_id)
+        if not place:
+            return {'error': 'Place not found'}, 404
+
+        #Chek owner or admin
+        if not is_admin and str(place.owner_id) != str(user_id):
+            return {'error': 'Unauthorized action'}, 403
+
+        data = request.json
+
+        try:
+            updated_place = facade.update_place(place_id, data)
+            if not updated_place:
+                return {'error': 'Update failed'}, 400
+
+            return {
+                'message': 'Place updated successfully',
+                'place': updated_place.to_dict()
+            }, 200
+        except Exception as e:
+            return {'error': str(e)}, 400

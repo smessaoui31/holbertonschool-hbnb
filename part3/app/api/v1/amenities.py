@@ -1,5 +1,6 @@
 from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import jwt_required, get_jwt
+from flask import request
 from app.services.facade import facade
 
 api = Namespace('amenities', description='Amenity operations')
@@ -71,3 +72,65 @@ class AmenityResource(Resource):
             return {'message': 'Amenity not found'}, 404
         except Exception as e:
             return {'message': str(e)}, 400
+        
+@api.route('/amenities/')
+class AdminAmenityCreate(Resource):
+    @jwt_required()
+    @api.expect(amenity_model, validate=True)
+    def post(self):
+        """Admin only: Create a new amenity"""
+        claims = get_jwt()
+        if not claims.get('is_admin', False):
+            return {'error': 'Admin privileges required'}, 403
+
+        data = request.json
+        name = data.get('name')
+
+        if not name:
+            return {'error': 'Amenity name is required'}, 400
+
+        try:
+            new_amenity = facade.create_amenity(data)
+            if not new_amenity:
+                return {'error': 'Amenity creation failed'}, 500
+
+            return {
+                'message': 'Amenity created successfully',
+                'amenity': {
+                    'id': new_amenity.id,
+                    'name': new_amenity.name
+                }
+            }, 201
+        except Exception as e:
+            return {'error': str(e)}, 400
+        
+@api.route('/amenities/<amenity_id>')
+class AdminAmenityModify(Resource):
+    @jwt_required()
+    @api.expect(amenity_model, validate=True)
+    def put(self, amenity_id):
+        """Admin only: Modify an existing amenity"""
+        claims = get_jwt()
+        if not claims.get('is_admin', False):
+            return {'error': 'Admin privileges required'}, 403
+
+        data = request.json
+        name = data.get('name')
+
+        if not name:
+            return {'error': 'Amenity name is required'}, 400
+
+        try:
+            updated_amenity = facade.update_amenity(amenity_id, data)
+            if not updated_amenity:
+                return {'error': 'Amenity not found or update failed'}, 404
+
+            return {
+                'message': 'Amenity updated successfully',
+                'amenity': {
+                    'id': updated_amenity.id,
+                    'name': updated_amenity.name
+                }
+            }, 200
+        except Exception as e:
+            return {'error': str(e)}, 400
