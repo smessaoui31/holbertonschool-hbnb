@@ -98,7 +98,7 @@ class UserResource(Resource):
         except Exception as e:
             return {'error': str(e)}, 400
 
-@api.route('/users/')
+@api.route('/admin')
 class AdminUserCreate(Resource):
     @jwt_required()
     @api.expect(user_model, validate=True)
@@ -111,7 +111,7 @@ class AdminUserCreate(Resource):
         user_data = request.json
         email = user_data.get('email')
 
-        #chek email
+        # Chek email
         if facade.get_user_by_email(email):
             return {'error': 'Email already registered'}, 400
 
@@ -130,7 +130,7 @@ class AdminUserCreate(Resource):
         except Exception as e:
             return {'error': str(e)}, 400
 
-@api.route('/users/<user_id>')
+@api.route('/admin/<user_id>')
 class AdminUserModify(Resource):
     @jwt_required()
     def put(self, user_id):
@@ -142,7 +142,7 @@ class AdminUserModify(Resource):
         data = request.json
         email = data.get('email')
 
-        #Chek email
+        # Chek email
         if email:
             existing_user = facade.get_user_by_email(email)
             if existing_user and str(existing_user.id) != user_id:
