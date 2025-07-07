@@ -1,7 +1,10 @@
 from .basemodel import BaseModel
 from app.extensions import db, bcrypt
+from app import db, bcrypt
 
 class User(BaseModel):
+    __tablename__ = 'users'
+        
     password_hash = db.Column(db.String(128), nullable=False)
     first_name = db.Column(db.String(64), nullable=False)
     last_name = db.Column(db.String(64), nullable=False)
