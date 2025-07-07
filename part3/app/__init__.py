@@ -9,7 +9,7 @@ from app.api.v1.amenities import api as amenities_ns
 from flask_jwt_extended import JWTManager
 from app.api.v1.auth import api as auth_ns
 
-db = SQLAlchemy()
+
 jwt = JWTManager()
 
 def create_app(config_name="default"):
