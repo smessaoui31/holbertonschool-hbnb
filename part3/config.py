@@ -11,7 +11,10 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///development.db'
+    SQLALCHEMY_DATABASE_URI = os.getenv(
+    'sqlite:///development.db',
+    'sqlite:///app.db' # Chemin vers le fichier Sqlite
+    )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
 
