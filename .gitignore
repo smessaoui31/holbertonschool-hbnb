@@ -9,3 +9,4 @@ main*.py
 *_2*
 **venv/
 *test.py
+hbnb.db
