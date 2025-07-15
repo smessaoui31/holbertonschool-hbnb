@@ -74,10 +74,6 @@ erDiagram
         string state_id FK
         string name
         string description
-        number number_rooms
-        number number_bathrooms
-        number max_guest
-        number price_by_night
         number latitude
         number longitude
     }
