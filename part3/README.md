@@ -127,23 +127,6 @@ SELECT * FROM users;
 .quit
 ```
 
-## ✍️ Author
-Holberton School — HBnB Project   
-Team: 👥 - [Mr Phillips](https://github.com/ddoudou7) - [Sofian](https://github.com/smessaoui31) - [Evgeni](https://github.com/Genia888)
-
-
-
-=======
-# 🏠 HBnB Flask API
-
-This project is a Flask-based REST API for the HBnB application. It provides:
-
-- A configurable Application Factory.
-- Secure user password hashing.
-- JWT-based authentication.
-- Role-based access control (RBAC).
-- SQLAlchemy persistence layer.
-
 ---
 
 ## 📂 Features Overview
@@ -1231,3 +1214,6 @@ INSERT INTO place_amenity (place_id, amenity_id) VALUES (
 
 ---
 
+## ✍️ Author
+Holberton School — HBnB Project   
+Team: 👥 - [Mr Phillips](https://github.com/ddoudou7) - [Sofian](https://github.com/smessaoui31) - [Evgeni](https://github.com/Genia888)
