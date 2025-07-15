@@ -10,7 +10,7 @@ erDiagram
     AMENITY }|--|{ PLACE : "available"
 
     USER {
-        string id PK
+        string id
         string email
         string password
         string first_name
@@ -18,40 +18,37 @@ erDiagram
     }
 
     PLACE {
-        string id PK
-        string user_id FK
-        string city_id FK
-        string state_id FK
+        string id
+        string user_id
+        string city_id
+        string state_id
         string name
         string description
-        number number_rooms
-        number number_bathrooms
-        number max_guest
         number price_by_night
         number latitude
         number longitude
     }
 
     REVIEW {
-        string id PK
-        string user_id FK
-        string place_id FK
+        string id
+        string user_id
+        string place_id
         string text
     }
 
     CITY {
-        string id PK
-        string state_id FK
+        string id
+        string state_id
         string name
     }
 
     STATE {
-        string id PK
+        string id
         string name
     }
 
     AMENITY {
-        string id PK
+        string id
         string name
     }
     
