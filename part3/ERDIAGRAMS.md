@@ -10,7 +10,7 @@ erDiagram
     AMENITY }|--|{ PLACE : "available"
 
     USER {
-        string id PK
+        string id
         string email
         string password
         string first_name
@@ -18,7 +18,7 @@ erDiagram
     }
 
     PLACE {
-        string id PK
+        string id
         string user_id
         string city_id
         string state_id
