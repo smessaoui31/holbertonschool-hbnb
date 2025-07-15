@@ -19,9 +19,9 @@ erDiagram
 
     PLACE {
         string id PK
-        string user_id FK
-        string city_id FK
-        string state_id FK
+        string user_id
+        string city_id
+        string state_id
         string name
         string description
         number price_by_night
@@ -30,25 +30,25 @@ erDiagram
     }
 
     REVIEW {
-        string id PK
-        string user_id FK
-        string place_id FK
+        string id
+        string user_id
+        string place_id
         string text
     }
 
     CITY {
-        string id PK
-        string state_id FK
+        string id
+        string state_id
         string name
     }
 
     STATE {
-        string id PK
+        string id
         string name
     }
 
     AMENITY {
-        string id PK
+        string id
         string name
     }
     
