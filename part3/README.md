@@ -80,7 +80,7 @@ erDiagram
     }
 
     REVIEW {
-        string id PK
+        string id
         string user_id
         string place_id
         string text
