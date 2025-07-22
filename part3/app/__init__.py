@@ -17,12 +17,14 @@ def create_app(config_name="default"):
 
     from config import config # Importe le dictionnaire
     app = Flask(__name__)
-    CORS(app)
+    
     app.config.from_object(config[config_name])
 
     db.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
+    
+    CORS(app)
     
     api = Api(app, version='1.0', title='HBnB API',
               description='HBnB Application API')
