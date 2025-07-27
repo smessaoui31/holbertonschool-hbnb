@@ -1,5 +1,6 @@
 from .basemodel import BaseModel
 from app import db
+from sqlalchemy.orm import relationship
 
 class Place(BaseModel):
     __tablename__ = "places"
@@ -11,6 +12,7 @@ class Place(BaseModel):
     longitude = db.Column(db.Float, nullable=False)
     owner_id = db.Column(db.String(60), db.ForeignKey("users.id"), nullable=False)
     owner = db.relationship("User", backref="places", lazy=True)
+    reviews = relationship("Review", back_populates="place", cascade="all, delete-orphan")
 
     def __init__(self, title, description, price, latitude, longitude, owner_id):
         super().__init__()
