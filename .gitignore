@@ -10,3 +10,4 @@ main*.py
 **venv/
 *test.py
 hbnb.db
+*.sh
