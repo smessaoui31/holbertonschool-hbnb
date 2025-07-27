@@ -8,7 +8,6 @@ from app.api.v1.reviews import api as reviews_ns
 from app.api.v1.amenities import api as amenities_ns
 from app.api.v1.auth import auth_ns, admin_ns
 from flask_jwt_extended import JWTManager
-from app.api.v1.auth import api as auth_ns
 from flask_cors import CORS
 
 
