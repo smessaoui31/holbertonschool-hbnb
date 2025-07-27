@@ -142,3 +142,16 @@ header .right-nav {
 #logout-button:hover {
   background-color: #c0392b;
 }
+
+.star-container {
+  display: inline-block;
+  font-size: 1.8rem;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.star-container span:hover,
+.star-container span.hovered,
+.star-container span.selected {
+  color: gold;
+}
