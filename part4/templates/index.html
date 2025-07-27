@@ -9,15 +9,19 @@
 </head>
 <body>
   <!-- HEADER -->
-  <header>
-    <nav>
-  <span id="user-info">Welcome!</span>
-  <button id="logout-button">Logout</button>
-    </nav>
-    <nav>
-      <img src="logo.png" alt="HBnB Logo" class="logo">
+  <header class="site-header">
+    <div class="header-left">
       <a href="login.html" class="login-button">Login</a>
-    </nav>
+    </div>
+
+    <div class="header-center">
+      <img src="logo.png" alt="HBnB Logo" class="logo">
+    </div>
+
+    <div class="header-right" id="auth-actions">
+      <span id="user-info" style="display: none;"></span>
+      <button id="logout-button" style="display: none;">Logout</button>
+    </div>
   </header>
 
   <!-- MAIN -->
@@ -35,12 +39,7 @@
 
     <!-- PLACES LIST -->
     <section id="places-list">
-      <!-- Example card -->
-      <div class="place-card">
-        <h3>Charming Studio</h3>
-        <p>Price per night: $80</p>
-        <button class="details-button" onclick="window.location.href='place.html?id=1'">View Details</button>
-      </div>
+      <!-- Cards will load here dynamically -->
     </section>
   </main>
 
