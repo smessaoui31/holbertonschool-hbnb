@@ -1,44 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Place Details</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
-    <div id="user-info"></div>
-    <button id="logout-button" style="display:none;">Logout</button>
-    <a href="login.html" class="login-button">Login</a>
+    <nav>
+      <span id="user-info" style="display: none;"></span>
+      <button id="logout-button" style="display: none;">Logout</button>
+      <a href="login.html" class="login-button">Login</a>
+    </nav>
   </header>
 
   <main>
+    <!-- Section dynamique pour le lieu -->
     <section id="place-details">
-      <!-- Details will be populated here -->
+      <!-- Populated dynamically -->
     </section>
 
+    <!-- Section des avis -->
     <section id="reviews">
-      <h3>Reviews</h3>
-      <!-- Reviews will be inserted here -->
+      <h2>Reviews</h2>
+      <!-- Populated dynamically -->
     </section>
 
+    <!-- Formulaire d'ajout de review (seulement si connecté) -->
     <section id="add-review">
-      <h3>Add a Review</h3>
+      <h2>Add a Review</h2>
       <form id="review-form">
-        <textarea id="review-text" placeholder="Your review" required></textarea>
+        <label for="review-text">Review:</label><br>
+        <textarea id="review-text" name="review-text" required rows="4"></textarea><br>
 
-        <div>
-          <label><input type="radio" name="rating" value="1"> 1</label>
-          <label><input type="radio" name="rating" value="2"> 2</label>
-          <label><input type="radio" name="rating" value="3"> 3</label>
-          <label><input type="radio" name="rating" value="4"> 4</label>
-          <label><input type="radio" name="rating" value="5"> 5</label>
-        </div>
+        <label for="rating">Rating:</label><br>
+        <label><input type="radio" name="rating" value="1"> 1</label>
+        <label><input type="radio" name="rating" value="2"> 2</label>
+        <label><input type="radio" name="rating" value="3"> 3</label>
+        <label><input type="radio" name="rating" value="4"> 4</label>
+        <label><input type="radio" name="rating" value="5"> 5</label><br><br>
+
+        <p id="review-error" style="color: red;"></p>
+        <p id="review-success" style="color: green;"></p>
 
         <button type="submit">Submit Review</button>
-        <p id="review-error" class="error"></p>
-        <p id="review-success" class="success"></p>
       </form>
     </section>
   </main>
