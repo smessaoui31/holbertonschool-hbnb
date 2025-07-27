@@ -9,8 +9,6 @@ class Place(BaseModel):
     price = db.Column(db.Float, nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
-
-    # Ajout de la foreign key et de la relation
     owner_id = db.Column(db.String(60), db.ForeignKey("users.id"), nullable=False)
     owner = db.relationship("User", backref="places", lazy=True)
 
