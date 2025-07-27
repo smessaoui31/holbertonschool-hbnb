@@ -13,11 +13,16 @@ function deleteCookie(name) {
 async function checkUserAuthentication() {
   const token = getCookie('token');
   const userDisplay = document.getElementById('user-info');
+  const logoutBtn = document.getElementById('logout-button');
+  const loginBtn = document.querySelector('.login-button');
 
   if (!token) {
     // Redirige vers login si aucune session
-    if (window.location.pathname.includes('index.html') || window.location.pathname === '/')
-      window.location.href = 'login.html';
+    if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
+      loginBtn.style.display = 'inline';
+      userDisplay.style.display = 'none';
+      logoutBtn.style.display = 'none';
+    }
     return;
   }
 
@@ -29,7 +34,12 @@ async function checkUserAuthentication() {
 
     if (res.ok) {
       const user = await res.json();
-      if (userDisplay) userDisplay.textContent = `Welcome, ${user.first_name}`;
+      if (userDisplay) {
+        userDisplay.textContent = `Welcome, ${user.first_name}`;
+        userDisplay.style.display = 'inline';
+      }
+      if (logoutBtn) logoutBtn.style.display = 'inline';
+      if (loginBtn) loginBtn.style.display = 'none';
     } else {
       deleteCookie('token');
       window.location.href = 'login.html';

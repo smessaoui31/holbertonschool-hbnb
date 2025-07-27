@@ -103,3 +103,42 @@ footer {
   font-weight: bold;
   text-align: center;
 }
+
+/* === HEADER FLEX LAYOUT FIX === */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+header .left-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header .right-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+#user-info {
+  font-weight: bold;
+}
+
+#logout-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#logout-button:hover {
+  background-color: #c0392b;
+}
