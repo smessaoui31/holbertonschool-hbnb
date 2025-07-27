@@ -193,3 +193,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ✅ Exécuter la vérification de session
 document.addEventListener('DOMContentLoaded', checkUserAuthentication);
+
+//  AJOUT D’UNE REVIEW AVEC ÉTOILES
+function getPlaceIdFromURL() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('id');
+}
+
+function checkAuthentication() {
+  const token = getCookie('token');
+  if (!token) {
+    window.location.href = 'index.html';
+  }
+  return token;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const reviewForm = document.getElementById('review-form');
+  const placeId = getPlaceIdFromURL();
+  const token = checkAuthentication();
+
+  if (reviewForm && placeId && token) {
+    reviewForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const reviewText = document.getElementById('review-text').value.trim();
+      const rating = document.querySelector('input[name="rating"]:checked')?.value;
+      const error = document.getElementById('review-error');
+      const success = document.getElementById('review-success');
+
+      if (!rating) {
+        error.textContent = 'Please select a rating.';
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/api/v1/reviews/places/${placeId}/reviews`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ text: reviewText, rating: parseInt(rating) })
+        });
+
+        if (response.ok) {
+          success.textContent = 'Review submitted successfully!';
+          reviewForm.reset();
+          error.textContent = '';
+        } else {
+          const data = await response.json();
+          error.textContent = data.error || 'Failed to submit review.';
+          success.textContent = '';
+        }
+      } catch (err) {
+        console.error('Review submission error:', err);
+        error.textContent = 'Something went wrong. Please try again.';
+        success.textContent = '';
+      }
+    });
+  }
+});
