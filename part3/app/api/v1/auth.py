@@ -4,7 +4,6 @@ from flask import request
 from app.services.facade import facade
 
 auth_ns = Namespace('auth', description='Authentication operations')
-admin_ns = Namespace('admin', description='Admin operations')
 
 # --- Authentification : login ---
 login_model = auth_ns.model('Login', {
@@ -32,6 +31,19 @@ class Login(Resource):
         return {'access_token': access_token}, 200
 
 
+# --- Récupérer l'utilisateur connecté ---
+@auth_ns.route('/me')
+class Me(Resource):
+    @jwt_required()
+    def get(self):
+        """Retourne les infos de l'utilisateur connecté via JWT"""
+        user_id = get_jwt_identity()
+        user = facade.get_user_by_id(user_id)
+        if not user:
+            return {'error': 'User not found'}, 404
+        return user.to_dict(), 200
+
+
 # --- Endpoint protégé (test) ---
 @auth_ns.route('/protected')
 class ProtectedResource(Resource):
@@ -44,7 +56,7 @@ class ProtectedResource(Resource):
 
 
 # --- Admin : mise à jour d'un utilisateur ---
-@admin_ns.route('/users/<user_id>')
+@auth_ns.route('/users/<user_id>')
 class AdminUserResource(Resource):
     @jwt_required()
     def put(self, user_id):
